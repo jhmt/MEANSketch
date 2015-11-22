@@ -5,7 +5,7 @@ var mongodb = require('mongodb');
 var app = express();
 var users;
 
-app.use(express.static('views'));
+app.use(express.static('src'));
 app.use(bodyParser.json());
 app.listen(3000);
 
