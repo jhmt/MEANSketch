@@ -20,3 +20,20 @@ app.get("/api/users", function(req, res) {
   });
 });
 
+// get one user
+app.get("/api/users/:_id", function(req, res) {
+  users.findOne({_id: mongodb.ObjectID(req.params._id)}, function(err, item) {
+    res.send(item);
+  });
+});
+
+// Add / Update
+app.post("/api/users", function(req, res) {
+  var user = req.body;
+  if (user._id) user._id = mongodb.ObjectID(user._id);
+  users.save(user, function() {
+    res.send("insert or update");
+  });
+});
+
+

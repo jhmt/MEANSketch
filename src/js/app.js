@@ -1,11 +1,13 @@
 var app = angular.module('app', ['ngResource', 'ngRoute']);
 
 app.config(function($routeProvider) {
-	$routeProvider.when('/users', {
-		templateUrl: 'list.html', controller: 'ListCtrl'
-	}).otherwise({
-		redirectTo: '/users'
-	});
+    $routeProvider.when('/users', {
+      templateUrl: 'list.html', controller: 'ListCtrl'
+    }).when('/users/:_id', {
+      templateUrl: 'edit.html', controller: 'EditCtrl'
+    }).otherwise({
+      redirectTo: '/users'
+    });
 });
 
 app.factory('User', function($resource) {
@@ -19,4 +21,13 @@ app.controller('ListCtrl', function($scope, $route, User) {
 			$route.reload();
 		});
 	};
+});
+
+app.controller('EditCtrl', function($scope, $routeParams, $location, User) {
+if ($routeParams._id != 'new') $scope.user = User.get({_id: $routeParams._id});
+$scope.edit = function() {
+  User.save($scope.user, function() {
+	$location.url('/');
+  });
+};
 });
