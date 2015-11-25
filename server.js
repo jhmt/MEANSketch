@@ -36,4 +36,9 @@ app.post("/api/users", function(req, res) {
   });
 });
 
-
+// Delete
+app.delete("/api/users/:_id", function(req, res) {
+  users.remove({_id: mongodb.ObjectID(req.params._id)}, function() {
+    res.send("delete");
+  });
+});
